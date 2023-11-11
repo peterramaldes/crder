@@ -22,13 +22,10 @@ fn read() -> Result<Vec<Person>, Box<dyn Error>> {
 }
 
 fn main() {
-    let persons = match read() {
-        Ok(p) => p,
-        Err(e) => {
-            println!("error running example: {}", e);
-            process::exit(1);
-        }
-    };
+    let persons = read().unwrap_or_else(|err| {
+        println!("error running example: {err}");
+        process::exit(1);
+    });
 
     println!("{:#?}", persons);
 }
